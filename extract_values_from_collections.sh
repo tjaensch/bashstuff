@@ -18,7 +18,9 @@ do
   # remove last character from match
   doi="${doi%?}"
   # remove line breaks
-  filetitle=${filetitle//[\n,]/}
+  filetitle=${filetitle//$'\n'/}
+  # remove commas from filetitle
+  filetitle=${filetitle//,}
 
   echo "$filename"
   echo "$doi"
