@@ -36,4 +36,4 @@ tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF
 find /nodc/projects/metadata/granule/onestop/collections_from_WAFs/ -name \*.xml -delete
 
 # tar up NODC collection level files
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/approved/iso/
+tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
