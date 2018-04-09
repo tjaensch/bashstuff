@@ -46,6 +46,10 @@ tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF
 scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
 scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
 
+# change permissions
+ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
+ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")
 
