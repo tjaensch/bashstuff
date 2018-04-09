@@ -37,10 +37,14 @@ done
 # add NCDC collection level files to tar ball
 tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`/
 # delete processing directory
-rm -r NCDC_WAF_collections_`date +%m%d%Y`
+rm -r /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`
 
 # tar up NODC collection level files
 tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
+
+# move files to Gluster
+scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
+scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
 
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")
