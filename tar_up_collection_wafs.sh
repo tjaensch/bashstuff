@@ -31,9 +31,9 @@ do
 done
 
 # add NCDC collection level files to tar ball
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/
+tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/
 # delete untarred .xml files
 find /nodc/projects/metadata/granule/onestop/collections_from_WAFs/ -name \*.xml -delete
 
 # tar up NODC collection level files
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
+tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
