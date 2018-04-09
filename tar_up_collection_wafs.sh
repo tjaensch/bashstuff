@@ -1,5 +1,9 @@
 #!/bin/bash
 
+start=$(date +%s.%N)
+
+mkdir NCDC_WAF_collections_`date +%m%d%Y`
+
 # get all NCDC collection level files from various WAFs
 declare -a arr=("https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/iso/xml"
 				"https://www1.ncdc.noaa.gov/pub/data/metadata/published/geoportal/iso/xml"
@@ -27,13 +31,18 @@ declare -a arr=("https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/is
 
 for i in "${arr[@]}"
 do
-   wget -r -np -nd -A .xml -e robots=off --directory-prefix=/nodc/projects/metadata/granule/onestop/collections_from_WAFs/ "$i"
+   wget -r -np -nd -A .xml -e robots=off --directory-prefix=/nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`/ "$i"
 done
 
 # add NCDC collection level files to tar ball
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/
-# delete untarred .xml files
-find /nodc/projects/metadata/granule/onestop/collections_from_WAFs/ -name \*.xml -delete
+tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`/
+# delete processing directory
+rm -r NCDC_WAF_collections_`date +%m%d%Y`
 
 # tar up NODC collection level files
 tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
+
+end=$(date +%s.%N)
+runtime=$(python -c "print(${end} - ${start})")
+
+echo "Runtime was $runtime seconds."
