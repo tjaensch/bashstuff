@@ -5,8 +5,7 @@ start=$(date +%s.%N)
 mkdir NCDC_WAF_collections_`date +%m%d%Y`
 
 # get all NCDC collection level files from various WAFs
-declare -a arr=("https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/iso/xml"
-				"https://www1.ncdc.noaa.gov/pub/data/metadata/published/geoportal/iso/xml"
+declare -a arr=("https://www1.ncdc.noaa.gov/pub/data/metadata/published/geoportal/iso/xml"
 				"https://www.ngdc.noaa.gov/metadata/published/NOAA/NESDIS/NGDC/Collection/iso/xml"
 				"https://www.ngdc.noaa.gov/metadata/published/NOAA/NESDIS/NGDC/MGG/DEM/iso/xml"
 				"https://www.ngdc.noaa.gov/metadata/published/NOAA/NESDIS/NGDC/MGG/Geology/iso/xml"
