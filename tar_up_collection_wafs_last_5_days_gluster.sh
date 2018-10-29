@@ -2,10 +2,12 @@
 
 start=$(date +%s.%N)
 
-mkdir NCDC_WAF_collections_`date +%m%d%Y`
+# make dir for downloading files from WAFs
+mkdir ./WAF_collections_updated_last_5_days_ending_`date +%m%d%Y`
 
-# get all NCDC collection level files from various WAFs
-declare -a arr=("https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/iso/xml/"
+# get all collection level files from various WAFs
+declare -a arr=("https://data.nodc.noaa.gov/nodc/archive/metadata/approved/iso/"
+	            "https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/iso/xml/"
 				"https://www1.ncdc.noaa.gov/pub/data/metadata/published/geoportal/iso/xml/"
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/Collection/iso/xml/"
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/MGG/DEM/iso/xml/"
@@ -31,24 +33,15 @@ declare -a arr=("https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/is
 
 for i in "${arr[@]}"
 do
-   wget -r -np -nd -A .xml -e robots=off --directory-prefix=/nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`/ "$i"
+   wget -r -np -nd -A .xml -e robots=off --directory-prefix=./WAF_collections_updated_last_5_days_ending_`date +%m%d%Y`/ "$i"
 done
 
-# add NCDC collection level files to tar ball
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`/
+# delete files older than 5 days
+find ./WAF_collections_updated_last_5_days_ending_`date +%m%d%Y` -mindepth 1 -mtime +5 -delete
+# add collection level files to tar ball
+tar -czvf ./WAF_collections_updated_last_5_days_ending_`date +%m%d%Y`.tar.gz ./WAF_collections_updated_last_5_days_ending_`date +%m%d%Y`
 # delete processing directory
-rm -r /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`
-
-# tar up NODC collection level files
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
-
-# move files to Gluster
-scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
-scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
-
-# change permissions
-ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
-ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+rm -r ./WAF_collections_updated_last_5_days_ending_`date +%m%d%Y`
 
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")
