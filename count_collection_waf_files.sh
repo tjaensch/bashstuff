@@ -6,6 +6,7 @@ start=$(date +%s.%N)
 declare -a arr=("https://data.nodc.noaa.gov/nodc/archive/metadata/approved/iso/"
 				"https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/iso/xml/"
 				"https://www1.ncdc.noaa.gov/pub/data/metadata/published/geoportal/iso/xml/"
+				"https://www1.ncdc.noaa.gov/pub/data/metadata/published/Space_Weather/iso/xml/"/
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/Collection/iso/xml/"
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/MGG/DEM/iso/xml/"
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/MGG/Geology/iso/xml/"
@@ -24,14 +25,35 @@ declare -a arr=("https://data.nodc.noaa.gov/nodc/archive/metadata/approved/iso/"
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/STP/Ionosphere/iso/xml/"
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/STP/Solar/iso/xml/"
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/STP/Solar_Imagery/iso/xml/"
-				"https://www1.ncdc.noaa.gov/pub/data/metadata/published/Space_Weather/iso/xml/"/
 				"https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/STP/Terrestrial/iso/xml/"
                 )
 
+NODC=0;
+NCDC=0;
+NGDC=0;
+
 for i in "${arr[@]}"
 do
-   echo "$i, $(wget -qO - "$i" | grep '.*\.xml' | wc -l)" >> /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
+    count=$(wget -qO - "$i" | grep '.*\.xml' | wc -l)
+
+    if [[ "$i" == *"nodc"* ]]; then
+    	NODC=$(($NODC + $count));
+    fi
+
+    if [[ "$i" == *"ncdc"* ]]; then
+    	NCDC=$(($NCDC + $count));
+    fi
+
+    if [[ "$i" == *"NGDC"* ]]; then
+    	NGDC=$(($NGDC + $count));
+    fi
+    
+    # write to file 
+    echo "$i, $count" >> /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
 done
+
+# write total counts to beginning of file
+echo "Record count: $(($NODC + $NCDC + $NGDC)) (NODC: $NODC NCDC: $NCDC NGDC: $NGDC)" | cat - /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv > temp && mv temp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
 
 # move file to Gluster
 scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
