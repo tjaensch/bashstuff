@@ -50,6 +50,10 @@ scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_colle
 ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
 ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
 
+# delete tars
+rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
+rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")
 

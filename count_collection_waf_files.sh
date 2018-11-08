@@ -39,6 +39,9 @@ scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection
 # change permissions
 ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/waf_collection_file_counts_`date +%m%d%Y`.csv
 
+# delete file after processing
+rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
+
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")
 
