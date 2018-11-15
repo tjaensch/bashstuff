@@ -38,18 +38,21 @@ do
 
     if [[ "$i" == *"nodc"* ]]; then
     	NODC=$(($NODC + $count));
+    	TYPE="NODC";
     fi
 
     if [[ "$i" == *"ncdc"* ]]; then
     	NCDC=$(($NCDC + $count));
+    	TYPE="NCDC";
     fi
 
     if [[ "$i" == *"NGDC"* ]]; then
     	NGDC=$(($NGDC + $count));
+    	TYPE="NGDC";
     fi
     
     # write to file 
-    echo "$i, $count" >> /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
+    echo "$i, $count, $TYPE" >> /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
 done
 
 # write total counts to beginning of file
@@ -62,7 +65,7 @@ scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection
 ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/waf_collection_file_counts_`date +%m%d%Y`.csv
 
 # delete file after processing
-rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
+# rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/waf_collection_file_counts_`date +%m%d%Y`.csv
 
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")
