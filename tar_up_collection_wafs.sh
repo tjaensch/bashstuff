@@ -31,28 +31,31 @@ declare -a arr=("https://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/is
 
 for i in "${arr[@]}"
 do
-   wget -r -np -nd -A .xml -e robots=off --directory-prefix=/nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`/ "$i"
+   wget -r -np -nd -A .xml -e robots=off --directory-prefix=/nodc/projects/metadata/granule/onestop/collections_from_WAFs/input_tars/NCDC_WAF_collections_`date +%m%d%Y`/ "$i"
 done
 
 # add NCDC collection level files to tar ball
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`/
+tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/input_tars/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/projects/metadata/granule/onestop/collections_from_WAFs/input_tars/NCDC_WAF_collections_`date +%m%d%Y`/
 # delete processing directory
-rm -r /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`
+rm -r /nodc/projects/metadata/granule/onestop/collections_from_WAFs/input_tars/NCDC_WAF_collections_`date +%m%d%Y`
 
 # tar up NODC collection level files
-tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
+tar -czvf /nodc/projects/metadata/granule/onestop/collections_from_WAFs/input_tars/NODC_WAF_collections_`date +%m%d%Y`.tar.gz /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/
+
+# validate downloaded tar balls
+java -Xmx6g -jar /nodc/projects/metadata/granule/onestop/collections_from_WAFs/OneStopMetadataSubmission-1.0-SNAPSHOT-jar-with-dependencies.jar -p /nodc/projects/metadata/granule/onestop/collections_from_WAFs/input_tars/ -c
 
 # move files to Gluster
-scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
-scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
+scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/valid_NCDC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
+scp /nodc/projects/metadata/granule/onestop/collections_from_WAFs/valid_NODC_WAF_collections_`date +%m%d%Y`.tar.gz thomas.jaensch@osprocess-dev.ncei.noaa.gov:/onestop/metadata/tars/
 
 # change permissions
-ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
-ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/valid_NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
+ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/valid_NODC_WAF_collections_`date +%m%d%Y`.tar.gz
 
 # delete tars
-rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
-rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+#rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_WAF_collections_`date +%m%d%Y`.tar.gz
+#rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
 
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")
