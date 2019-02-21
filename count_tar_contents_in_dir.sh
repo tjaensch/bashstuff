@@ -6,10 +6,10 @@ ALL_VALIDATED_FILES=0;
 
 for ((i=0; i<${#arr[@]}; i++))
 do
-  echo "${arr[$i]}"
-  tar -tzf "${arr[$i]}" | wc -l
+  echo $(basename "${arr[$i]}");
   COUNT=$(tar -tzf "${arr[$i]}" | wc -l)
+  echo $COUNT;
   ALL_VALIDATED_FILES=$(($ALL_VALIDATED_FILES + $COUNT));
 done
 
-echo ALL_VALIDATED_FILES;
+echo $ALL_VALIDATED_FILES;
