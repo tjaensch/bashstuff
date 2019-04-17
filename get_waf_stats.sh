@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# script to get WAF stats on the command line, takes one or more WAF URL arguments; WAFs need to be list of XML files to work as intended
+# script may take some time to run depending on how long the WAFs to be examined are
+
 for i in "$@"
 
 do

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# modification of tar_up_collection_wafs.sh script to work on osload-prod
+# could be run as a crontab to produce the daily collection tars and validate in one step
+
 start=$(date +%s.%N)
 
 mkdir /onestop-local/temp_collections_not_validated/NCDC_NGDC_WAF_collections_`date +%m%d%Y`
@@ -77,8 +80,10 @@ rm -r /onestop-local/temp_collections_not_validated/NODC_WAF_collections_`date +
 java -Xmx6g -jar /onestop-local/MetadataSubmission/target/OneStopMetadataSubmission-1.0-SNAPSHOT-jar-with-dependencies.jar -i /onestop-local/temp_collections_not_validated/ -o /onestop-local/metadata/validated_collections/ -c
 
 # change permissions
-chmod 755 /onestop-local/metadata/validated_collections/NCDC_NGDC_WAF_collections_`date +%m%d%Y`.tar.gz
-chmod 755 /onestop-local/metadata/validated_collections/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+chmod 755 /onestop-local/metadata/validated_collections/valid_NCDC_NGDC_WAF_collections_`date +%m%d%Y`.tar.gz
+chmod 755 /onestop-local/metadata/validated_collections/valid_NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+chmod 755 /onestop-local/metadata/validated_collections/invalid_NCDC_NGDC_WAF_collections_`date +%m%d%Y`.tar.gz
+chmod 755 /onestop-local/metadata/validated_collections/invalid_NODC_WAF_collections_`date +%m%d%Y`.tar.gz
 
 # delete unvalidated tars
 rm /onestop-local/temp_collections_not_validated/NCDC_NGDC_WAF_collections_`date +%m%d%Y`.tar.gz

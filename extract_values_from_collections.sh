@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# script to extract values from ISO XML files in a directory and write to CSV
+# will have to be modified to run on some other dir than specified on line 6
+
 FILES=/nodc/users/tjaensch/geoportalScraper/collections/*
 
 echo "file name, fileIdentifier, doi, filetitle" > ../MD_Geoportal_collections_filenames_with_titles.csv

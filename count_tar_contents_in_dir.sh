@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# script to count files in tarballs on server dir
+
 # array of tars in dir
 arr=(/nodc/projects/metadata/granule/onestop/GHRSST_tars/valid/*)
 ALL_VALIDATED_FILES=0;

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# script that is run daily from /nodc/users/tjaensch as a crontab, will need to be modified to be run from sowhere else once that user account has been disabled
+
 start=$(date +%s.%N)
 
 mkdir /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_NGDC_WAF_collections_`date +%m%d%Y`
@@ -69,8 +71,8 @@ ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/
 ssh thomas.jaensch@osprocess-dev.ncei.noaa.gov chmod 755 /onestop/metadata/tars/daily/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
 
 # delete tars
-#rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_NGDC_WAF_collections_`date +%m%d%Y`.tar.gz
-#rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
+rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NCDC_NGDC_WAF_collections_`date +%m%d%Y`.tar.gz
+rm /nodc/projects/metadata/granule/onestop/collections_from_WAFs/NODC_WAF_collections_`date +%m%d%Y`.tar.gz
 
 end=$(date +%s.%N)
 runtime=$(python -c "print(${end} - ${start})")

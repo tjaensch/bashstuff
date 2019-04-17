@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# modification of tar_up_collection_wafs.sh script
+# will need to be modified to be run by different user
+
 start=$(date +%s.%N)
 
 # make dir for downloading files from WAFs

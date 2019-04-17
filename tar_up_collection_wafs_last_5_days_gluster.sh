@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# modification of tar_up_collection_wafs.sh script to work on Gluster
+
 start=$(date +%s.%N)
 
 # make dir for downloading files from WAFs

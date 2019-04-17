@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# script to extract file names, file identifiers, and purpose from ISO XML files in a directory and write them to a CSV file in the parent directory from where script is run
+# will need to be modified to be run on some other directory than the one on line 6
+
 FILES=/nodc/users/tjaensch/geoportalScraper/collections/*
 
 echo "file name, fileIdentifier, purpose" > ../MD_Geoportal_collections_files_purpose.csv

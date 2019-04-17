@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# script that counts the files listed on the collection WAFs specified in the arr array; will need to be modified to run under somebody else's credentials
+
 start=$(date +%s.%N)
 
 # get all collection level files from various WAFs

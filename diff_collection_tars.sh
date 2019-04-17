@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# script to compare tarball content by file names; takes 2 command line arguments with paths for tarballs to be compared and finally emails the result to email addresses specified in last line
+
 tar -tf "$1" | sed 's#.*/##' > /tmp/list1.txt
 tar -tf "$2" | sed 's#.*/##'  > /tmp/list2.txt
 
